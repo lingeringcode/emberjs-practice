@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie lt-ie9 lt-ie8 lt-ie7 ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie lt-ie9 lt-ie8 ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie lt-ie9 ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+  <title>Ember App Practice with Unicorns</title>
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <!--<link rel="stylesheet" href="css/style.css">-->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link href="css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/ember-1.5.0.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/libs/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <!-- the data-template-name "application" == app template on every page by default  -->
+  <script type="text/x-handlebars" data-template-name="application">
+    <div class='navbar navbar-default'>
+      <div class='container'>
+        <a href='#' class='navbar-brand'>Ember.js practice with unicorns</a>
+        <ul class='nav navbar-nav navbar-right'>
+          {{#link-to 'index' class="navbar-brand" tagName="li"}}Home{{/link-to}}
+          {{#link-to 'about' class="navbar-brand" tagName="li"}}About{{/link-to}}
+          {{#link-to 'unicorns' class="navbar-brand" tagName="li"}}Unicorns{{/link-to}}
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      {{outlet}}
+    </div>
+    <footer class="container"></footer>
+  </script>
+
+  <!-- the data-template-name "index" == app template on index.html page  -->
+  <script type="text/x-handlebars" data-template-name="index">
+    <h1>Welcome to my practice Ember page!</h1>
+    <p>
+      There are {{unicornCount}} unicorns.
+    </p>
+    <img {{bind-attr src='logo'}} alt='logo' />
+    <p>Rendered on {{time}}.</p>
+    <hr>
+  </script>
+
+  <!-- the data-template-name "index" == app template on about.html page  -->
+  <script type="text/x-handlebars" data-template-name="about">
+    <h1>About my practice Ember page</h1>
+    <p>Nothing here to see. <a href="https://twitter.com/search?q=%23becauseUnicorns&src=typd&f=realtime">#becauseUnicorns</a></p>
+    <hr>
+  </script>
+
+  <!-- the data-template-name "unicorn" == app template on unicorns.html page  -->
+  <script type="text/x-handlebars" data-template-name="unicorns">
+    <div class='row'>
+      <div class='col-sm-3'>
+        <div class='list-group'>
+          {{#each}}
+            {{#link-to 'unicorn' this classNames='list-group-item'}}
+              {{name}}
+            {{/link-to}}
+          {{/each}}
+          <hr>
+        </div>
+      </div>
+      <div class='col-sm-9'>
+        {{outlet}}
+        <hr>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="unicorns/index">
+    <p class='text-muted'>
+      Learn more about unicorns by choosing one from the list.
+    </p>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="unicorn">
+    <div class='row'>
+      <div class="col-md-7">
+        <h2>{{name}}</h2>
+        <p>Age: {{age}}</p>
+        <p class="text-muted">Bio: {{bio}}</p>
+      </div>
+      <div class="col-md-5">
+        <img {{bind-attr src='img'}} class='img-thumbnail img-rounded'/>
+      </div>
+    </div>
+  </script>
+
+</body>
+</html>
