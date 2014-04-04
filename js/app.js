@@ -25,21 +25,41 @@ App.Router.map(function() {
 });
 
 //feeds properties to specified expression in index
-App.IndexController = Ember.Controller.extend({
-  unicornCount: 999,
+App.IndexController = Ember.ArrayController.extend({
+  //this keeps tabs on the length
+  unicornCount: Ember.computed.alias('length'),
+  /*============================
+    This is the same as above:
+
+    unicornCount: function () {
+    return this.get('length');
+    }.property('length') 
+  ==============================*/
   logo: 'assets/img/unicorn-herd.jpeg',
   time: function() {
     return(new Date()).toDateString()
   }.property()
 });
 
+App.IndexRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.findAll('unicorn');
+  }
+});
+
 //feeds properties to specified expression in index
-App.UnicornsArrayController = Ember.Controller.extend({
+App.UnicornsArrayController = Ember.ArrayController.extend({
   unicornCount: 999,
   logo: 'images/logo.png',
   time: function() {
     return(new Date()).toDateString()
   }.property()
+});
+
+//using to decorate the object on client-side
+App.UnicornsController = Ember.ArrayController.extend({
+  sortProperties: ['name']
+  //if Z-A desired, then "sortAscending: false"
 });
 
 /*=============================================
@@ -71,7 +91,14 @@ App.Unicorn = DS.Model.extend({
   name: DS.attr('string'),
   age: DS.attr('number'),
   bio: DS.attr('string'),
-  img: DS.attr('string')
+  img: DS.attr('string'),
+  comments: DS.hasMany('comment', {async: true})
+});
+
+App.Comment = DS.Model.extend({
+  text: DS.attr('string'),
+  commentAt: DS.attr('date'),
+  unicorn: DS.belongsTo('unicorn')
 });
 
 App.Unicorn.FIXTURES = [
@@ -80,20 +107,36 @@ App.Unicorn.FIXTURES = [
     name: 'Pilgrim',
     age: 854,
     bio: 'Pilgrim is a young unicorn, but the most bold.',
-    img: 'assets/img/pilgrim.jpg'
+    img: 'assets/img/pilgrim.jpg',
+    comments: []
   },
   {
     id: 2,
     name: 'Shimmer',
     age: 5000,
     bio: 'Shimmer shines, and she is the unicorn leader.',
-    img: 'assets/img/shimmer.jpg'
+    img: 'assets/img/shimmer.jpg',
+    comments: []
   },
   {
     id: 3,
     name: 'Fauxnie',
     age: 2345,
     bio: 'Fauxnie lurks in the shadow arts of hipster.',
-    img: 'assets/img/fauxnie.jpg'
+    img: 'assets/img/fauxnie.jpg',
+    comments: [100,101]
+  }
+];
+
+App.Comment.FIXTURES = [
+  {
+    id: 100,
+    unicorn: 3,
+    text: "Umm, you're so last month."
+  },
+  {
+    id: 101,
+    name: 3,
+    text: "That's so fetch!"
   }
 ];

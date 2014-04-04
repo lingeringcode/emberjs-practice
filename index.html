@@ -93,6 +93,16 @@
         <h2>{{name}}</h2>
         <p>Age: {{age}}</p>
         <p class="text-muted">Bio: {{bio}}</p>
+        <h3>Comments</h3>
+        <ul>
+          {{#each comments}}
+            <li>{{text}}</li>
+          {{else}}
+            <li>
+              <p class='text-muted'>No comments yet. Be the first to write one!</p>
+            </li>
+          {{/each}}
+        </ul>
       </div>
       <div class="col-md-5">
         <img {{bind-attr src='img'}} class='img-thumbnail img-rounded'/>
